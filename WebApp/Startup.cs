@@ -9,17 +9,22 @@ namespace WebApp
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
             Configuration = configuration;
+            WebHostEnvironment = webHostEnvironment;
         }
 
+        public IWebHostEnvironment WebHostEnvironment { get; }
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.RegisterEntityFramework(Configuration);
+            services.EnableRuntimeCompilation(WebHostEnvironment);
             services.AddControllersWithViews();
         }
 
