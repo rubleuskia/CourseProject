@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
-using DataAccess.Entities;
+using DatabaseAccess;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -24,8 +24,8 @@ namespace WebApp.Controllers
             var users = _userManager.Users.ToArray();
             return View(users.Select(x => new UserViewModel
             {
-                Age = x.Age,
-                Id = x.Id,
+                //Age = x.Age,
+                //Id = x.Id,
                 Email = x.Email,
             }).ToArray());
         }
@@ -46,9 +46,9 @@ namespace WebApp.Controllers
 
             return View("UserDetails", new UserViewModel
             {
-                Age = user.Age,
+                //Age = user.Age,
                 Email = user.Email,
-                Id = user.Id,
+                //Id = user.Id,
             });
         }
 
@@ -63,9 +63,9 @@ namespace WebApp.Controllers
 
             return View(new UserViewModel
             {
-                Age = user.Age,
+                //Age = user.Age,
                 Email = user.Email,
-                Id = user.Id,
+                //Id = user.Id,
             });
         }
 
@@ -83,9 +83,9 @@ namespace WebApp.Controllers
                 return BadRequest();
             }
 
-            userToUpdate.Age = userViewModel.Age.Value;
+            //userToUpdate.Age = userViewModel.Age.Value;
             userToUpdate.Email = userViewModel.Email;
-            userToUpdate.UserName = userViewModel.Email;
+            //userToUpdate.UserName = userViewModel.Email;
             await _userManager.UpdateAsync(userToUpdate);
 
             return RedirectToAction("Index");
@@ -107,9 +107,9 @@ namespace WebApp.Controllers
 
             var user = new User
             {
-                Age = model.Age.Value,
+                //Age = model.Age.Value,
                 Email = model.Email,
-                UserName = model.Email
+                //UserName = model.Email
             };
 
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);

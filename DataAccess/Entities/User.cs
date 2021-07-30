@@ -1,9 +1,19 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace DataAccess.Entities
+namespace DatabaseAccess
 {
-    public class User : IdentityUser
+    public class User
     {
-        public int Age { get; set; }
+        public int Id { get; set; }
+        [MaxLength(50)]
+        public string Email { get; set; }
+        [MaxLength(50)]
+        public string Password { get; set; }
+
+        public List<Passenger> Passengers { get; set; }
+
+        public int InfoUserId { get; set; }
+        public InfoUser InfoUser { get; set; }
     }
 }

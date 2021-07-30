@@ -1,5 +1,5 @@
 using DataAccess;
-using DataAccess.Entities;
+using DatabaseAccess;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -23,7 +23,7 @@ namespace WebApp.Extensions
         {
             string connection = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>();
+            //services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>();
         }
     }
 }

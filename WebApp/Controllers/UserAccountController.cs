@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using DataAccess.Entities;
+using DatabaseAccess;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models.Users;
@@ -68,8 +68,8 @@ namespace WebApp.Controllers
             var user = new User
             {
                 Email = model.Email,
-                UserName = model.Email,
-                Age = model.Age
+                //UserName = model.Email,
+                //Age = model.Age
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
