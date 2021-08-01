@@ -1,7 +1,9 @@
 using DataAccess;
 using DataAccess.Entities;
+using DataAccess.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,9 +23,18 @@ namespace WebApp.Extensions
 
         public static void RegisterEntityFramework(this IServiceCollection services, IConfiguration configuration)
         {
-            string connection = configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+            builder.DataSource = "localhost";
+            builder.UserID = "sa";
+            builder.Password = "MyPass@word";
+            builder.InitialCatalog = "WebAppDatabase";
+
+            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(new SqlConnection(builder.ConnectionString)));
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationContext>();
+
+            services.AddTransient<IBeforeCommitHandler, CreateEntityBeforeCommitHandler>();
+            services.AddTransient<IBeforeCommitHandler, UpdateEntityBeforeCommitHandler>();
+            services.AddTransient<IBeforeCommitHandler, VersionedEntityBeforeCommitHandler>();
         }
     }
 }

@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+    sql:
+        image: "mcr.microsoft.com/azure-sql-edge"
+        environment:
+            MSSQL_USER: "sa"
+            MSSQL_SA_PASSWORD: "MyPass@word"
+            MSSQL_PID: "Developer"
+            ACCEPT_EULA: "1"
+        ports:
+            - "1433:1433"
