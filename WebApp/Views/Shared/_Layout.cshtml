@@ -30,6 +30,12 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">User management</a>
                         </li>
                     }
+                    @if (User.IsInRole(ApplicationConstants.Roles.Administrator))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Roles management</a>
+                        </li>
+                    }
                 </ul>
                 <ul class="nav">
                     @if (User.Identity.IsAuthenticated)
