@@ -9,8 +9,6 @@ namespace WebApp
 {
     public class Startup
     {
-
-
         public Startup(IConfiguration configuration, IWebHostEnvironment webHostEnvironment)
         {
             Configuration = configuration;
@@ -25,6 +23,7 @@ namespace WebApp
         {
             services.RegisterEntityFramework(Configuration);
             services.EnableRuntimeCompilation(WebHostEnvironment);
+            services.AddHttpContextAccessor();
             services.AddControllersWithViews();
         }
 

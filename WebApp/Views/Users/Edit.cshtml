@@ -5,6 +5,7 @@
         <form method="post" asp-action="Update">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="RowVersion" />
             <fieldset>
                 <legend>User details</legend>
                 <div class="mb-3">

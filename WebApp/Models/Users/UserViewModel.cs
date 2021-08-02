@@ -12,5 +12,7 @@ namespace WebApp.Models.Users
         [Required]
         [Range(1, 100)]
         public int? Age { get; set; }
+
+        public byte[] RowVersion { get; set; }
     }
 }

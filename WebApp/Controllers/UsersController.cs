@@ -1,9 +1,11 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using DataAccess.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApp.Models.Users;
 
 namespace WebApp.Controllers
@@ -19,9 +21,9 @@ namespace WebApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var users = _userManager.Users.ToArray();
+            var users = await _userManager.Users.ToArrayAsync();
             return View(users.Select(x => new UserViewModel
             {
                 Age = x.Age,
@@ -66,6 +68,7 @@ namespace WebApp.Controllers
                 Age = user.Age,
                 Email = user.Email,
                 Id = user.Id,
+                RowVersion = user.RowVersion,
             });
         }
 
@@ -86,9 +89,15 @@ namespace WebApp.Controllers
             userToUpdate.Age = userViewModel.Age.Value;
             userToUpdate.Email = userViewModel.Email;
             userToUpdate.UserName = userViewModel.Email;
-            await _userManager.UpdateAsync(userToUpdate);
+            userToUpdate.RowVersion = userViewModel.RowVersion;
+            var result = await _userManager.UpdateAsync(userToUpdate);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index");
+            }
 
-            return RedirectToAction("Index");
+            ModelState.AddModelError(string.Empty, "User has been modified, please refresh page and try again.");
+            return View("Edit", userViewModel);
         }
 
         [HttpGet]
